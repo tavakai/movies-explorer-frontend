@@ -1,0 +1,99 @@
+.card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+.card__img {
+  grid-column: span 2 / auto;
+  margin: 0px 0px 10px 0px;
+  width: 100%;
+}
+.card__line {
+  background-color: #E8E8E8;
+  height: 1px;
+  width: 100%;
+  border: none;
+  grid-column: span 2 / auto;
+  margin: 13px 0px 0px 0px;
+}
+.card__title {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+  margin: 0;
+}
+.card__likes {
+  background-color: #F9F9F9;
+  border-radius: 36px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  justify-self: end;
+  position: relative;
+}
+.card__like {
+  position: absolute;
+  left: 29.17%;
+  right: 29.17%;
+  top: 33.33%;
+  bottom: 31.25%;
+  background: url("../../../images/like-unactive.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  width: 10px;
+  height: 8.5px;
+  padding: 0px;
+  cursor: pointer;
+}
+/* .card__like:hover {
+  transform: scale(1.5, 1.5);
+  transition: .2s;
+  background: url("../../../images/like-active.svg");
+} */
+.card__like_active {
+  background: url("../../../images/like-active.svg");
+  position: absolute;
+  left: 29.17%;
+  right: 29.17%;
+  top: 33.33%;
+  bottom: 31.25%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  width: 10px;
+  height: 8.5px;
+  padding: 0px;
+  cursor: pointer;
+}
+.card__like_active:hover {
+  transform: scale(1.5, 1.5);
+  transition: .2s;
+}
+.card__delete-icon {
+  background: url("../../../images/close-icon.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  cursor: pointer;
+  
+}
+.card__delete-icon:hover {
+  transform: scale(1.5, 1.5);
+  transition: .3s;
+}
+.card__duration {
+  font-size: 11px;
+  line-height: 13px;
+  color: #A0A0A0;
+  grid-column: span 2 / auto;
+  margin: 6px 0px 0px 0px;
+}

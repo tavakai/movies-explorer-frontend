@@ -1,0 +1,110 @@
+.aboutMe__content {
+  padding: 110px 0px 100px 0px;
+}
+.aboutMe__title {
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+}
+.aboutMe__line {
+  height: 1px;
+  margin: 23px 0px 0px 0px;
+}
+.aboutMe__profile {
+  margin: 66px 0px 0px 0px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.aboutMe__name {
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  margin: 0;
+  grid-column: span 2 / auto;
+}
+.aboutMe__job {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 18px 0px 0px 0px;
+  grid-column: span 2 / auto;
+}
+.aboutMe__description {
+  max-width: 600px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 26px 0px 0px 0px;
+  grid-column: span 2 / auto;
+}
+.aboutMe__social {
+  margin: 99px 0px 0px 0px;
+  padding: 0;
+  display: flex;
+  grid-column: span 2 / auto;
+}
+.aboutMe__social-item {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  list-style-type: none;
+  padding-right: 20px;
+}
+.aboutMe__social-item_link {
+  text-decoration: none;
+  color: #000;
+}
+.aboutMe__social-item:hover {
+  font-weight: 550;
+  transition: .2s;
+}
+.aboutMe__img {
+  grid-row: span 4 / auto;
+  width: 100%;
+  max-width: 292px;
+  grid-row-start: 1;
+  grid-column-start: 3;
+  grid-row-end: 5;
+}
+
+@media screen and (max-width: 850px) {
+  .aboutMe__description {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 20px 0px 0px 0px;
+  }
+  .aboutMe__name {
+    font-size: 40px;
+    line-height: 40px;
+  }
+  .aboutMe__job {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 16px 0px 0px 0px;
+  }
+  .aboutMe__profile {
+    margin: 66px 0px 0px 0px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .aboutMe__img {
+    grid-column-start: 1;
+    justify-self: center;
+  }
+  .aboutMe__profile {
+    grid-template-columns: 1fr;
+  }
+  .aboutMe__profile {
+    margin: 60px 0px 0px 0px;
+  }
+  .aboutMe__name {
+    margin: 40px 0px 0px 0px;
+  }
+  .aboutMe__social {
+    margin: 40px 0px 0px 0px;
+  }
+}
