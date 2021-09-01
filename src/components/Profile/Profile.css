@@ -62,6 +62,9 @@
   cursor: pointer;
   margin: 220px 0px 0px 0px;
 }
+.profile__btn:hover {
+  opacity: .8;
+}
 .profile__signout {
   font-size: 13px;
   line-height: 16px;
@@ -70,6 +73,9 @@
   cursor: pointer;
   color: #EE3465;
   margin: 16px 0px 0px 0px;
+}
+.profile__signout:hover {
+  opacity: .8;
 }
 .profile__notification-text {
   margin: 220px 0px 0px 0px;

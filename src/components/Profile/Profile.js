@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../Header/Header';
+import Navigation from '../Navigation/Navigation';
 
 const Profile = () => {
   return (
     <section className="profile">
-      <Header />
+      <Navigation />
         <div className="content profile__content">
           <form action="#" className="profile__form" id="profile__edit">
             <fieldset className="profile__fieldset">

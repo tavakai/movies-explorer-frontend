@@ -36,7 +36,7 @@
 
 .aboutproject__progress {
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1.3fr 5fr;
   margin: 110px 0px 0px 0px;
 }
 
@@ -76,7 +76,7 @@
 
 .aboutproject__progress-subtitle {
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1.3fr 5fr;
   text-align: center;
 }
 
@@ -109,6 +109,12 @@
 }
 
 @media screen and (max-width: 550px) {
+  .aboutproject__progress {
+    grid-template-columns: 2fr 5fr;
+  }
+  .aboutproject__progress-subtitle {
+    grid-template-columns: 2fr 5fr;
+  }
   .aboutproject__progress-backend_text {
     font-size: 11px;
     line-height: 13px;
@@ -136,6 +142,10 @@
    }
   .aboutproject__progress {
     margin: 60px 0px 0px 0px;
+    grid-template-columns: 2.5fr 5fr;
+  }
+  .aboutproject__progress-subtitle {
+    grid-template-columns: 2.5fr 5fr;
   }
   .aboutproject__description {
     font-size: 12px;

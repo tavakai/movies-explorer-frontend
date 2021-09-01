@@ -4,7 +4,7 @@ import btn_icon from "../../images/icon__COLOR_icon-main.svg";
 
 const Navigation = () => {
   return (
-    <nav className="nav">
+    <nav className="nav content">
       <a href="/" className="nav__logo">
         <img className="nav__logo-main" src={logo} alt="header-logo" />
       </a>

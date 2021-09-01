@@ -30,4 +30,7 @@
   .MoviesCardList__content {
     padding: 40px 0px 40px 0px;
   }
+  .MoviesCardList__more-btn {
+    width: 240px;
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import SearchForm from '../Movies/SearchForm/SearchForm';
-import Header from '../Header/Header';
+import Navigation from '../Navigation/Navigation';
 import Footer from '../Footer/Footer';
 
 const SavedMovies = () => {
@@ -9,7 +9,7 @@ const SavedMovies = () => {
   return (
     <section className="savedMovies">
       <div className="savesMovies__content">
-      <Header />
+      <Navigation />
       <SearchForm />
       <MoviesCardList savedMovies={savedMovies} />
       <Footer />

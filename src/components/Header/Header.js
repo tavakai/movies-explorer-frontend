@@ -4,7 +4,7 @@ import Navigation from '../Navigation/Navigation';
 
 const Header = ({loggedIn}) => {
   // Если пользователь залогинен
-  loggedIn = true;
+  loggedIn = false;
   return (
     <section className={`${loggedIn ? 'header_bgWhite' : 'header'}`}>
       <div className="content">

@@ -6,7 +6,9 @@ const Register = () => {
     <section className="register">
         <div className="content register__content">
           <form action="#" name="register" className="register__form">
-            <img src={logo} className="register__logo" alt="logo" />
+            <a href="/" className="register__logo">
+              <img src={logo} className="register__logo-img" alt="logo" />
+            </a>
             <fieldset className="register__fieldset">
               <legend>
                 <h2 className="register__title">Добро пожаловать!</h2>

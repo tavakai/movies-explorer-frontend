@@ -24,6 +24,7 @@
 .searchFrom__input:focus{
   outline: 0;
   outline-offset: 0;
+  border-color: #FF6838;
 }
 .searchForm__btn {
   position: absolute;
@@ -40,6 +41,9 @@
   font-size: 14px;
   line-height: 18px;
   cursor: pointer;
+}
+.searchForm__btn:hover {
+  opacity: .8;
 }
 
 @media screen and (max-width: 500px) {

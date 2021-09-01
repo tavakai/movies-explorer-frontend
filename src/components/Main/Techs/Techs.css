@@ -101,6 +101,8 @@
     }
     .techs__section {
         padding: 50px 0px 0px 0px;
+        max-width: 188px;
+        width: 100%;
     }
     .techs__section-item {
         width: 84px;
