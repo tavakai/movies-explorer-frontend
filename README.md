@@ -1,2 +1,7 @@
-# movies-explorer-frontend
-front-end diploma profect
+# Frontend-часть дипломной работы
+
+***
+
+### Панель навигации во время выполненного входа в приложение меняется через константу loggedIn
+  // Если пользователь залогинен
+  loggedIn = true;
