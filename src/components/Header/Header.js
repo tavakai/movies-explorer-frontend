@@ -1,14 +1,23 @@
-import logo from '../../images/logo.png';
-import React from 'react';
-import Navigation from '../Navigation/Navigation';
+import logo from "../../images/logo.png";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import Navigation from "../Navigation/Navigation";
 
-const Header = ({loggedIn}) => {
-  // Если пользователь залогинен
-  loggedIn = false;
+const Header = ({ loggedIn }) => {
+  const location = useLocation();
+  function checkLoggedin() {
+    if (
+      (loggedIn && location.pathname === "/") ||
+      (!loggedIn && location.pathname === "/")
+    ) {
+      return `header`;
+    } else if (loggedIn && location.pathname !== "/") {
+      return `header header_bgWhite`;
+    }
+  }
   return (
-    <section className={`${loggedIn ? 'header_bgWhite' : 'header'}`}>
-      <div className="content">
-{loggedIn ? (
+    <section className={checkLoggedin()}>
+      {loggedIn ? (
         <Navigation />
       ) : (
         <div className="header__content">
@@ -16,17 +25,17 @@ const Header = ({loggedIn}) => {
             <img className="header__logo-main" src={logo} alt="header-logo" />
           </a>
           <div className="header__buttons">
-            <a href="/signup" className="header__signup">Регистрация</a>
-            <form action="/signin" className="header__signin">
-              <button className="header__signin-btn">Войти</button>
-            </form>
+            <Link to="/signup" className="header__signup">
+              Регистрация
+            </Link>
+            <Link to="/signin" className="header__signin-btn">
+              Войти
+            </Link>
           </div>
         </div>
       )}
-      </div>
-      
     </section>
   );
-}
+};
 
 export default Header;

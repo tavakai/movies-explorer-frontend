@@ -8,10 +8,10 @@ import AboutMe from './AboutMe/AboutMe.js';
 import Portfolio from './Portfolio/Portfolio.js';
 import Footer from '../Footer/Footer.js';
 
-const Main = () => {
+const Main = ({loggedIn}) => {
   return (
     <main className="main">
-      <Header />
+      <Header loggedIn={loggedIn} />
       <Promo />
       <NavTab />
       <AboutProject />

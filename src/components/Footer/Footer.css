@@ -1,5 +1,6 @@
 .footer {
   background: #FAFAFA;
+  flex: 0 0 auto;
 }
 .footer__content {
   padding: 79px 0px 20px 0px;

@@ -1,14 +1,25 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 30px 0px 30px;
+}
 .profile__content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 74px 0px 70px 0px;
+  width: 100%;
 }
 .profile__form {
   display: flex;
   flex-direction: column;
   max-width: 410px;
   width: 100%;
+  margin: 74px 0px 0px 0px;
+}
+.profile__legend {
+  text-align: center;
+  margin: 0px 0px 123px 0px;
 }
 .profile__fieldset {
   border: none;
@@ -23,7 +34,6 @@
   font-size: 24px;
   line-height: 29px;
   margin: 0;
-  text-align: center;
 }
 .profile__inputs {
   display: grid; 
@@ -62,10 +72,26 @@
   cursor: pointer;
   margin: 220px 0px 0px 0px;
 }
+.profile__btn_submit {
+  background: #FF6838;
+  border-radius: 3px;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #fff;
+  height: 45px;
+  cursor: pointer;
+  width: 100%;
+  margin: 220px 0px 0px 0px;
+}
+.profile__btn_submit:hover {
+  opacity: .8;
+}
 .profile__btn:hover {
   opacity: .8;
 }
-.profile__signout {
+.profile__signout_show {
   font-size: 13px;
   line-height: 16px;
   border: none;
@@ -73,6 +99,9 @@
   cursor: pointer;
   color: #EE3465;
   margin: 16px 0px 0px 0px;
+}
+.profile__signout_hide {
+  display: none;
 }
 .profile__signout:hover {
   opacity: .8;
