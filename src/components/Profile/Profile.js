@@ -40,7 +40,7 @@ const Profile = ({profileEditFn, signOut, loggedIn}) => {
         <form action="#" className="profile__form" id="profile__edit" onSubmit={handleSubmitForm}>
           <fieldset className="profile__fieldset">
             <legend className="profile__legend">
-              <h2 className="profile__title">Привет, {contextUser.name}</h2>
+              <h2 className="profile__title">Привет, {userName}</h2>
             </legend>
             <div className="profile__inputs">
               <span className="profile__input-title">Имя</span>

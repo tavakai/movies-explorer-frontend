@@ -68,6 +68,11 @@ function App() {
         if (res) {
           setLoggedIn(true);
           history.push("/movies");
+          mainApi
+            .getUserProfile()
+            .then((res) => {
+              setCurrentUser(res);
+            })
         } else if(res === undefined) {
           setModal(true);
           setResponseStatus(401);
@@ -133,7 +138,7 @@ function App() {
     if (localStorage.getItem("movies") !== null) {
       setData(JSON.parse(localStorage.getItem("movies")));
     }
-  }, [history, loggedIn]);
+  }, [history]);
 
   // Сохранение фильма
   const saveCard = (data) => {

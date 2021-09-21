@@ -70,7 +70,7 @@ const Register = ({handleSubmit, modal, responseStatus}) => {
               onChange={handleChangePassword}
               />
             </fieldset>
-            <button type="submit" disabled className="register__btn">Зарегистрироваться</button>
+            <button type="submit" className="register__btn">Зарегистрироваться</button>
           </form>
           <span className="register__signin-text">Уже зарегистрированы?&nbsp;
             <Link to="/signin" className="register__signin-btn">Войти</Link>
