@@ -1,36 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.png'
 import Modal from '../Modal/Modal';
+import { useFormWithValidation } from '../Validator/Validator';
 
 const Login = ({handleSubmit, responseStatus, modal}) => {
-  const [userEmail, setUserEmail] = useState({
-    email: "",
-  });
-  const [userPassword, setUserPassword] = useState({
-    password: "",
-  });
+  const validateForm = useFormWithValidation();
   const handleChangeEmail = (e) => {
-    setUserEmail(e.target.value);
+    validateForm.handleChange(e);
   };
 
   const handleChangePassword = (e) => {
-    setUserPassword(e.target.value);
+    validateForm.handleChange(e);
   };
   const submit = (e) => {
     e.preventDefault();
-    handleSubmit({
-      email: userEmail,
-      password: userPassword,
-    });
+    handleSubmit(validateForm.values);
   };
   return (
     <section className="login">
         <div className="content login__content">
           <form action="#" name="login" className="login__form" onSubmit={submit}>
-            <a href="/" className="login__logo">
+            <Link to="/" className="login__logo">
             <img src={logo} className="login__logo-img" alt="logo" />
-            </a>
+            </Link>
             <fieldset className="login__fieldset">
               <legend>
                 <h2 className="login__title">Рады видеть!</h2>
@@ -40,22 +33,26 @@ const Login = ({handleSubmit, responseStatus, modal}) => {
               type="email"
               className="login__input login__input_email"
               required
+              name="email"
               placeholder="Введите email"
               autoComplete="username"
               onChange={handleChangeEmail}
               />
+              <span className="login__error login__error_email">{validateForm.errors.email}</span>
               <p className="login__input-title">Пароль</p>
               <input
               type="password"
               className="login__input login__input_password"
               required
+              name="password"
+              minLength="8"
               placeholder="Введите пароль"
               autoComplete="current-password"
               onChange={handleChangePassword}
               />
-              {/* <p className="login__input-error">Что-то пошло не так...</p> */}
+              <span className="login__error login__error_password">{validateForm.errors.password}</span>
             </fieldset>
-            <button type="submit" className="login__btn">Войти</button>
+            <button type="submit" disabled={`${validateForm.isValid ? '' : 'disabled'}`} className={`login__btn ${validateForm.isValid ? 'login__btn_active' : ''}`}>Войти</button>
           </form>
           <span className="login__signup-text">Ещё не зарегистрированы?&nbsp;
             <Link to="/signup" className="login__signup-btn">Регистрация</Link>

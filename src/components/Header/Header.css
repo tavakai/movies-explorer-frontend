@@ -44,6 +44,9 @@
     .header {
         padding: 0;
     }
+    .header__content {
+        padding: 18px 30px;
+    }
 }
 
 @media screen and (max-width: 420px) {

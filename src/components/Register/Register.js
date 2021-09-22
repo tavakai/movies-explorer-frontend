@@ -1,43 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.png'
 import Modal from '../Modal/Modal';
+import { useFormWithValidation } from '../Validator/Validator';
 
 const Register = ({handleSubmit, modal, responseStatus}) => {
-  const [isValid, setIsValid] = useState(false);
-  const [userName, setUserName] = useState({
-    name: "",
-  });
-  const [userEmail, setUserEmail] = useState({
-    email: "",
-  });
-  const [userPassword, setUserPassword] = useState({
-    password: "",
-  });
+  const validateForm = useFormWithValidation();
   const handleChangeName = (e) => {
-    setUserName(e.target.value);
+    validateForm.handleChange(e);
   };
   const handleChangeEmail = (e) => {
-    setUserEmail(e.target.value);
+    validateForm.handleChange(e);
   };
   const handleChangePassword = (e) => {
-    setUserPassword(e.target.value);
+    validateForm.handleChange(e);
   };
   const submit = (e) => {
     e.preventDefault();
-    handleSubmit({
-      email: userEmail,
-      name: userName,
-      password: userPassword,
-    });
+    handleSubmit(validateForm.values);
   };
   return (
     <section className="register">
         <div className="content register__content">
           <form action="#" name="register" className="register__form" onSubmit={submit} >
-            <a href="/" className="register__logo">
+            <Link exact to="/" className="register__logo">
               <img src={logo} className="register__logo-img" alt="logo" />
-            </a>
+            </Link>
             <fieldset className="register__fieldset">
               <legend>
                 <h2 className="register__title">Добро пожаловать!</h2>
@@ -51,7 +39,9 @@ const Register = ({handleSubmit, modal, responseStatus}) => {
               onChange={handleChangeName}
               minLength="2"
               maxLength="30"
+              name="name"
               />
+              <span className="register__error register__error_name">{validateForm.errors.name}</span>
               <p className="register__input-title">E-mail</p>
               <input
               type="email"
@@ -60,17 +50,22 @@ const Register = ({handleSubmit, modal, responseStatus}) => {
               placeholder="Введите email"
               autoComplete="username"
               onChange={handleChangeEmail}
+              name="email"
               />
+              <span className="register__error register__error_email">{validateForm.errors.email}</span>
               <p className="register__input-title">Пароль</p>
               <input
               type="password"
               className="register__input register__input_password"
               required placeholder="Введите пароль"
               autoComplete="current-password"
+              minLength="8"
+              name="password"
               onChange={handleChangePassword}
               />
+              <span className="register__error register__error_password">{validateForm.errors.password}</span>
             </fieldset>
-            <button type="submit" className="register__btn">Зарегистрироваться</button>
+            <button type="submit" disabled={`${validateForm.isValid ? '' : 'disabled'}`} className={`register__btn ${validateForm.isValid ? 'register__btn_active' : ''}`}>Зарегистрироваться</button>
           </form>
           <span className="register__signin-text">Уже зарегистрированы?&nbsp;
             <Link to="/signin" className="register__signin-btn">Войти</Link>

@@ -4,8 +4,8 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 const Profile = ({profileEditFn, signOut, loggedIn}) => {
   const contextUser = React.useContext(CurrentUserContext);
-  const [userName, setUserName] = useState(contextUser.name);
-  const [userEmail, setEmail] = useState(contextUser.email);
+  const [userName, setUserName] = useState('');
+  const [userEmail, setEmail] = useState('');
   const [editing, setEditing] = useState(false);
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
@@ -31,6 +31,7 @@ const Profile = ({profileEditFn, signOut, loggedIn}) => {
   useEffect(() => {
     contextUser.name !== undefined && setUserName(contextUser.name);
     contextUser.email !== undefined && setEmail(contextUser.email);
+    setEditing(false);
   }, [contextUser]);
   return (
     <>
@@ -40,7 +41,7 @@ const Profile = ({profileEditFn, signOut, loggedIn}) => {
         <form action="#" className="profile__form" id="profile__edit" onSubmit={handleSubmitForm}>
           <fieldset className="profile__fieldset">
             <legend className="profile__legend">
-              <h2 className="profile__title">Привет, {userName}</h2>
+              <h2 className="profile__title">Привет, {contextUser.name}</h2>
             </legend>
             <div className="profile__inputs">
               <span className="profile__input-title">Имя</span>
@@ -82,7 +83,6 @@ const Profile = ({profileEditFn, signOut, loggedIn}) => {
             Выйти из аккаунта
           </button>
         </form>
-
       </div>
     </section>
     </>

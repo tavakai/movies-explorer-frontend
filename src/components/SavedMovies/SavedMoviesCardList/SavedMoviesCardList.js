@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Preloader from "../../Preloader/Preloader";
 import NotResults from '../../Movies/NotResults/NotResults';
 import MoviesCard from '../MoviesCard/MoviesCard';
@@ -9,9 +9,6 @@ const SavedMoviesCardList = ({
   removeCard,
   savedCards
 }) => {
-  useEffect(() => {
-    
-  })
   return (
     <section className="MoviesCardList">
       {loading ? (

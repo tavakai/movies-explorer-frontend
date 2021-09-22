@@ -38,7 +38,11 @@ function App() {
       .then((res) => {
         if (res.status === 201) {
           setLoggedIn(true);
-          // setIsOpenTooltip(true);
+          mainApi
+            .getUserProfile()
+            .then((res) => {
+              setCurrentUser(res);
+            })
           history.push("/movies");
         }
         return res.json();
@@ -57,7 +61,6 @@ function App() {
             setModal(false);
           }, 4000);
         }
-        // setIsOpenTooltip(true);
       });
   };
   // Авторизация пользователя
@@ -116,7 +119,8 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
         setLoggedIn(true);
-        mainApi
+        if(location.pathname === '/saved-movies') {
+          mainApi
           .getSavedItems()
           .then((res) => {
             setSavedMovies(res);
@@ -128,6 +132,7 @@ function App() {
           .finally(() => {
             setLoading(false);
           });
+        }
       })
       .catch((err) => {
         history.push("/");
@@ -167,7 +172,6 @@ function App() {
   useEffect(() => {
     let size_1280 = window.matchMedia("screen and (min-width: 1280px)");
     let size_910 = window.matchMedia("screen and (max-width: 910px)");
-    // let size_620 = window.matchMedia("screen and (max-width: 620px)");
 
     if (size_1280.matches) {
       setShowItem(16);
@@ -191,14 +195,29 @@ function App() {
         .getAllData()
         .then((res) => {
           // сохраняем загруженные данные в хранилище
-          setData(localStorage.setItem("movies", JSON.stringify(res)));
+          localStorage.setItem("movies", JSON.stringify(res))
+          setData(JSON.parse(localStorage.getItem("movies")));
+          if (location.pathname === "/movies") {
+            setAllMovies(
+              res.filter((movie) => {
+                return movie.nameRU.indexOf(inputValue) > -1;
+              })
+            );
+          } else if (location.pathname === "/saved-movies") {
+            setSavedMovies(
+              savedMovies.filter((movie) => {
+                return movie.nameRU.indexOf(inputValue) > -1;
+              })
+            );
+          }
+          
         })
         .catch((err) => console.log(err))
         .finally(() => {
           setLoading(false);
         });
     } else {
-      setData(JSON.parse(localStorage.getItem("movies")));
+      // setData(JSON.parse(localStorage.getItem("movies")));
       if (location.pathname === "/movies") {
         setAllMovies(
           data.filter((movie) => {
