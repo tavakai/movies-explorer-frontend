@@ -23,7 +23,7 @@ const Register = ({handleSubmit, modal, responseStatus}) => {
     <section className="register">
         <div className="content register__content">
           <form action="#" name="register" className="register__form" onSubmit={submit} >
-            <Link exact to="/" className="register__logo">
+            <Link to="/" className="register__logo">
               <img src={logo} className="register__logo-img" alt="logo" />
             </Link>
             <fieldset className="register__fieldset">
@@ -51,6 +51,7 @@ const Register = ({handleSubmit, modal, responseStatus}) => {
               autoComplete="username"
               onChange={handleChangeEmail}
               name="email"
+              pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
               />
               <span className="register__error register__error_email">{validateForm.errors.email}</span>
               <p className="register__input-title">Пароль</p>

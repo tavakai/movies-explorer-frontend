@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../../images/logo.png'
 import Modal from '../Modal/Modal';
 import { useFormWithValidation } from '../Validator/Validator';
@@ -21,9 +21,9 @@ const Login = ({handleSubmit, responseStatus, modal}) => {
     <section className="login">
         <div className="content login__content">
           <form action="#" name="login" className="login__form" onSubmit={submit}>
-            <Link to="/" className="login__logo">
-            <img src={logo} className="login__logo-img" alt="logo" />
-            </Link>
+            <NavLink to="/" className="login__logo">
+              <img src={logo} className="login__logo-img" alt="logo" />
+            </NavLink>
             <fieldset className="login__fieldset">
               <legend>
                 <h2 className="login__title">Рады видеть!</h2>
@@ -37,6 +37,7 @@ const Login = ({handleSubmit, responseStatus, modal}) => {
               placeholder="Введите email"
               autoComplete="username"
               onChange={handleChangeEmail}
+              pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
               />
               <span className="login__error login__error_email">{validateForm.errors.email}</span>
               <p className="login__input-title">Пароль</p>

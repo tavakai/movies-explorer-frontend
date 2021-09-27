@@ -16,8 +16,10 @@ const Movies = ({
   handleFilterShortItems,
   saveCard,
   savedCards,
-  removeCard
+  removeCard,
+  shortFilter
 }) => {
+  
   return (
     <section className="movies">
     <Header loggedIn={loggedIn} />
@@ -34,7 +36,8 @@ const Movies = ({
           handleShowMoreItems={handleShowMoreItems}
           savedCards={savedCards}
           saveCard={saveCard}
-          removeCard={removeCard} />
+          removeCard={removeCard}
+          shortFilter={shortFilter} />
       </div>
       <Footer />
     </section>

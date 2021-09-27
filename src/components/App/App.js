@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  Redirect,
+} from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./App.css";
 import Main from "../Main/Main";
@@ -21,11 +27,13 @@ function App() {
   const [allMovies, setAllMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [shortMovies, setShortMovies] = useState([]);
+  const [shortSavedMovies, setShortSavedMovies] = useState([]);
+  const [checked, setChecked] = useState(false);
   const [showItem, setShowItem] = useState(0);
   const [moreItem, setMoreItem] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [windowSize, setWindowSize] = useState(0);
-  const [shortFilter, setShortFilter] = useState(false);
+  // const [shortFilter, setShortFilter] = useState(false);
   const [modal, setModal] = useState(false);
   const [responseStatus, setResponseStatus] = useState(null);
   const history = useHistory();
@@ -38,11 +46,9 @@ function App() {
       .then((res) => {
         if (res.status === 201) {
           setLoggedIn(true);
-          mainApi
-            .getUserProfile()
-            .then((res) => {
-              setCurrentUser(res);
-            })
+          mainApi.getUserProfile().then((res) => {
+            setCurrentUser(res);
+          });
           history.push("/movies");
         }
         return res.json();
@@ -54,7 +60,7 @@ function App() {
           setTimeout(() => {
             setModal(false);
           }, 4000);
-        } else if(err.message === "Ошибка: 400") {
+        } else if (err.message === "Ошибка: 400") {
           setModal(true);
           setResponseStatus(400);
           setTimeout(() => {
@@ -71,12 +77,21 @@ function App() {
         if (res) {
           setLoggedIn(true);
           history.push("/movies");
+          mainApi.getUserProfile().then((res) => {
+            setCurrentUser(res);
+          });
           mainApi
-            .getUserProfile()
+            .getSavedItems()
             .then((res) => {
-              setCurrentUser(res);
+              setSavedMovies(res);
             })
-        } else if(res === undefined) {
+            .catch((err) => {
+              setLoading(false);
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+        } else if (res === undefined) {
           setModal(true);
           setResponseStatus(401);
           setTimeout(() => {
@@ -94,6 +109,11 @@ function App() {
       .doChangeUserInfo(data)
       .then((res) => {
         setCurrentUser(res);
+        setModal(true);
+        setResponseStatus(200);
+        setTimeout(() => {
+          setModal(false);
+        }, 4000);
       })
       .catch((err) => {
         return console.log(err);
@@ -101,15 +121,19 @@ function App() {
   };
   // Выход из системы
   const signOut = () => {
-    mainApi.logOut()
+    mainApi
+      .logOut()
       .then((res) => {
         setLoggedIn(false);
         setCurrentUser({});
-        history.push("/");
+        setSavedMovies([]);
+        localStorage.removeItem("searchResults");
+        setAllMovies([]);
+        setInputValue("");
       })
       .catch((err) => {
         return err;
-      })
+      });
   };
   // Начальная загрузка данных
   useEffect(() => {
@@ -119,23 +143,25 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
         setLoggedIn(true);
-        if(location.pathname === '/saved-movies') {
-          mainApi
+        // Запрос сохраненных фильмов пользователя
+        mainApi
           .getSavedItems()
           .then((res) => {
             setSavedMovies(res);
           })
           .catch((err) => {
-            console.log(err);
             setLoading(false);
           })
           .finally(() => {
             setLoading(false);
           });
+        if (localStorage.getItem("searchResults") !== null) {
+          setAllMovies(JSON.parse(localStorage.getItem("searchResults")));
         }
       })
       .catch((err) => {
-        history.push("/");
+        setLoggedIn(false);
+        return err;
       })
       .finally(() => {
         setLoading(false);
@@ -195,14 +221,14 @@ function App() {
         .getAllData()
         .then((res) => {
           // сохраняем загруженные данные в хранилище
-          localStorage.setItem("movies", JSON.stringify(res))
+          localStorage.setItem("movies", JSON.stringify(res));
           setData(JSON.parse(localStorage.getItem("movies")));
+          let results = res.filter((movie) => {
+            return movie.nameRU.indexOf(inputValue) > -1;
+          });
+          localStorage.setItem("searchResults", JSON.stringify(results));
           if (location.pathname === "/movies") {
-            setAllMovies(
-              res.filter((movie) => {
-                return movie.nameRU.indexOf(inputValue) > -1;
-              })
-            );
+            setAllMovies(results);
           } else if (location.pathname === "/saved-movies") {
             setSavedMovies(
               savedMovies.filter((movie) => {
@@ -210,20 +236,20 @@ function App() {
               })
             );
           }
-          
         })
         .catch((err) => console.log(err))
         .finally(() => {
           setLoading(false);
         });
     } else {
-      // setData(JSON.parse(localStorage.getItem("movies")));
-      if (location.pathname === "/movies") {
-        setAllMovies(
-          data.filter((movie) => {
-            return movie.nameRU.indexOf(inputValue) > -1;
-          })
+      let results = data.filter((movie) => {
+        return (
+          movie.nameRU.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
         );
+      });
+      if (location.pathname === "/movies") {
+        setAllMovies(results);
+        localStorage.setItem("searchResults", JSON.stringify(results));
       } else if (location.pathname === "/saved-movies") {
         setSavedMovies(
           savedMovies.filter((movie) => {
@@ -244,64 +270,64 @@ function App() {
   };
   // Фильтрация короткометражек
   const handleFilterShortItems = () => {
-    if (!shortFilter) {
-      setShortFilter(true);
-      setShortMovies(
-        allMovies.filter((movie) => {
-          return movie.duration <= 40;
-        })
-      );
+    if (!checked) {
+      setChecked(true);
+      if (location.pathname === "/saved-movies") {
+        setShortSavedMovies(
+          savedMovies.filter((movie) => {
+            return movie.duration <= 40;
+          })
+        );
+      } else if (location.pathname === "/movies") {
+        setShortMovies(
+          allMovies.filter((movie) => {
+            return movie.duration <= 40;
+          })
+        );
+      }
     } else {
-      setShortFilter(false);
+      setChecked(!checked);
     }
   };
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <div className="page">
+          <Route exact path="/">
+            <Main loggedIn={loggedIn} />
+          </Route>
           <Switch history={history}>
-            <Route exact path="/">
-              <Main loggedIn={loggedIn} />
-            </Route>
-            <Route path="/signin">
-              <Login
-              handleSubmit={handleSubmitAuth}
+            <ProtectedRoute
+              path="/saved-movies"
+              loading={loading}
+              loggedIn={loggedIn}
+              savedCards={savedMovies}
+              search={Search}
+              inputForm={HandleChangeSearchForm}
+              inputValue={inputValue}
+              searchResults={checked ? shortSavedMovies : savedMovies}
+              showItem={showItem}
+              moreItem={moreItem}
+              handleFilterShortItems={handleFilterShortItems}
+              removeCard={removeCard}
+              component={SavedMovies}
+            />
+            <ProtectedRoute
+              path="/profile"
+              profileEditFn={handleEditProfile}
+              signOut={signOut}
+              loggedIn={loggedIn}
+              component={Profile}
               modal={modal}
               responseStatus={responseStatus}
-              />
-            </Route>
-            <Route path="/signup">
-              <Register
-                handleSubmit={handleSubmitReg}
-                modal={modal}
-                responseStatus={responseStatus}
-              />
-            </Route>
-            <Route path="/saved-movies">
-              <SavedMovies
-                loading={loading}
-                loggedIn={loggedIn}
-                savedCards={savedMovies}
-                search={Search}
-                inputForm={HandleChangeSearchForm}
-                inputValue={inputValue}
-                searchResults={shortFilter ? shortMovies : savedMovies}
-                showItem={showItem}
-                moreItem={moreItem}
-                handleFilterShortItems={handleFilterShortItems}
-                removeCard={removeCard}
-              />
-            </Route>
-            <Route path="/profile">
-              <Profile profileEditFn={handleEditProfile} signOut={signOut} loggedIn={loggedIn} />
-            </Route>
+            />
             <ProtectedRoute
               path="/movies"
               loading={loading}
               loggedIn={loggedIn}
               search={Search}
               inputForm={HandleChangeSearchForm}
-              searchResults={shortFilter ? shortMovies : allMovies}
+              searchResults={checked ? shortMovies : allMovies}
               inputValue={inputValue}
               showItem={showItem}
               moreItem={moreItem}
@@ -312,7 +338,30 @@ function App() {
               saveCard={saveCard}
               removeCard={removeCard}
             />
+            <Route path="/signin">
+              {loggedIn ? (
+                <Redirect to="/" />
+              ) : (
+                <Login
+                  handleSubmit={handleSubmitAuth}
+                  modal={modal}
+                  responseStatus={responseStatus}
+                />
+              )}
+            </Route>
+            <Route path="/signup">
+              {loggedIn ? (
+                <Redirect to="/" />
+              ) : (
+                <Register
+                  handleSubmit={handleSubmitReg}
+                  modal={modal}
+                  responseStatus={responseStatus}
+                />
+              )}
+            </Route>
             <Route path="*" component={NotFoundPage} />
+            <Redirect to="/404" />
           </Switch>
         </div>
       </div>

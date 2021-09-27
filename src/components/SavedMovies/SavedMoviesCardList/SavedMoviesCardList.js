@@ -7,7 +7,8 @@ const SavedMoviesCardList = ({
   loading,
   showItem,
   removeCard,
-  savedCards
+  savedCards,
+  cards
 }) => {
   return (
     <section className="MoviesCardList">
@@ -15,7 +16,7 @@ const SavedMoviesCardList = ({
           <Preloader />
         ) : (
           <div className="MoviesCardList__content">
-            {savedCards.slice(0, showItem).map((card) => {
+            {cards.slice(0, showItem).map((card) => {
               return <MoviesCard
               key={card.id}
               card={card}

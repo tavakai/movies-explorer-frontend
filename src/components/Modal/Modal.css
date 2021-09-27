@@ -23,6 +23,16 @@
   align-items: center;
   justify-content: center;
 }
+.modal__content_success {
+  width: 90%;
+  height: 50px;
+  margin: 100px 0px 0px 0px;
+  background-color: #3CB371;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .modal__message {
   padding: 0;
   margin: 0;

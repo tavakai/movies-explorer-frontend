@@ -1,6 +1,6 @@
 import logo from "../../images/logo.png";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 
 const Header = ({ loggedIn }) => {
@@ -25,12 +25,12 @@ const Header = ({ loggedIn }) => {
             <img className="header__logo-main" src={logo} alt="header-logo" />
           </a>
           <div className="header__buttons">
-            <Link to="/signup" className="header__signup">
+            <NavLink to="/signup" className="header__signup">
               Регистрация
-            </Link>
-            <Link to="/signin" className="header__signin-btn">
+            </NavLink>
+            <NavLink to="/signin" className="header__signin-btn">
               Войти
-            </Link>
+            </NavLink>
           </div>
         </div>
       )}

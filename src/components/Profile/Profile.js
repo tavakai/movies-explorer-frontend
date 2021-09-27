@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header/Header';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { useFormWithValidation } from '../Validator/Validator';
+import Modal from '../Modal/Modal';
 
-const Profile = ({profileEditFn, signOut, loggedIn}) => {
-  const contextUser = React.useContext(CurrentUserContext);
-  const [userName, setUserName] = useState('');
-  const [userEmail, setEmail] = useState('');
+const Profile = ({profileEditFn, signOut, loggedIn, modal, responseStatus}) => {
+  const validateForm = useFormWithValidation();
+  const contextUser = useContext(CurrentUserContext);
+  const [btnDisabled, setBtnDisabled] = useState(true);
+  const [userName, setUserName] = useState(contextUser.name);
+  const [userEmail, setEmail] = useState(contextUser.email);
   const [editing, setEditing] = useState(false);
+
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
+    validateForm.handleChange(e);
   }
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+    validateForm.handleChange(e);
   }
   const handleSubmitForm = (e) => {
     e.preventDefault();
@@ -33,6 +40,21 @@ const Profile = ({profileEditFn, signOut, loggedIn}) => {
     contextUser.email !== undefined && setEmail(contextUser.email);
     setEditing(false);
   }, [contextUser]);
+
+  useEffect(() => {
+    if(userName !== contextUser.name || userEmail !== contextUser.email) {
+      setBtnDisabled(false);
+    } else {
+      setBtnDisabled(true);
+    }
+  }, [userName, userEmail, contextUser.name, contextUser.email])
+
+  useEffect(() => {
+    if(!editing) {
+      setUserName(contextUser.name)
+      setEmail(contextUser.email)
+    }
+  }, [editing])
   return (
     <>
     <Header loggedIn={loggedIn} />
@@ -47,25 +69,40 @@ const Profile = ({profileEditFn, signOut, loggedIn}) => {
               <span className="profile__input-title">Имя</span>
               <input
                 type="text"
+                required
                 className="profile__input profile__input_name"
-                name="Имя"
+                minLength="2"
+                maxLength="30"
+                name="name"
                 placeholder="Введите имя"
                 value={userName}
-                onChange={handleUserNameChange} />
+                onChange={handleUserNameChange}
+                readOnly={editing ? null : 'readonly'} />
+              <span className={`profile__error profile__error_name ${editing ? '' : 'profile__error_off'}`}>{validateForm.errors.name}</span>
               <hr className="profile__line" />
               <span className="profile__input-title">E-mail</span>
               <input
                 type="email"
+                required
                 className="profile__input profile__input_email"
                 placeholder="Введите почту"
                 value={userEmail}
-                onChange={handleEmailChange} />
+                onChange={handleEmailChange}
+                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                readOnly={editing ? null : 'readonly'}
+                name="email"
+                />
+                <span className={`profile__error profile__error_email ${editing ? '' : 'profile__error_off'}`}>{validateForm.errors.email}</span>
             </div>
           </fieldset>
           <span className="profile__notification-text">При обновлении профиля произошла ошибка.</span>
           {editing ? (
             <>
-              <button className="profile__btn_submit" type="submit" form="profile__edit">Сохранить</button>
+              <button
+              className={`profile__btn_submit ${validateForm.isValid && !btnDisabled ? 'profile__btn_submit-active' : ''}`}
+              disabled={validateForm.isValid && !btnDisabled ? '' : 'disabled'}
+              type="submit"
+              form="profile__edit">Сохранить</button>
               <button
                 className={`${!editing ? "profile__signout_hide" : "profile__signout_show"}`}
                 type="button"
@@ -85,6 +122,7 @@ const Profile = ({profileEditFn, signOut, loggedIn}) => {
         </form>
       </div>
     </section>
+    <Modal isActive={modal} responseStatus={responseStatus} />
     </>
   )
 }

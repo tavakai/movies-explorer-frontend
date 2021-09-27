@@ -10,12 +10,14 @@ const Modal = ({isActive, responseStatus}) => {
       setMessage("При регистрации пользователя произошла ошибка")
     } else if(responseStatus === 401) {
       setMessage("Неправильный логин или пароль")
+    } else if(responseStatus === 200) {
+      setMessage('Данные успешно сохранены')
     }
   }, [responseStatus])
  
   return (
     <section className={`modal ${isActive ? "modal_active" : ""}`}>
-      <div className="modal__content">
+      <div className={`${responseStatus === 200 ? 'modal__content_success' : 'modal__content'}`}>
         <p className="modal__message">{message}</p>
       </div>
     </section>

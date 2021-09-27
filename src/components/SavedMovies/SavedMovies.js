@@ -15,18 +15,17 @@ const SavedMovies = ({
   handleFilterShortItems,
   search
 }) => {
- 
   return (
     <section className="movies">
     <Header loggedIn={loggedIn} />
       <div className="movies__content">
-        <SearchForm search={search} inputForm={inputForm} inputValue={inputValue} />
+        <SearchForm search={search} inputForm={inputForm} inputValue={inputValue} handleFilterShortItems={handleFilterShortItems} />
         <SavedMoviesCardList
           loading={loading}
           cards={searchResults}
           savedCards={savedCards}
           removeCard={removeCard}
-          handleFilterShortItems={handleFilterShortItems} />
+          />
       </div>
       <Footer />
     </section>

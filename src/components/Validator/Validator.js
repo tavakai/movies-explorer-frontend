@@ -10,7 +10,6 @@ export function useForm() {
     const name = target.name;
     setValues({...values, [name]: value});
   };
-  console.log(values);
   return {values, handleChange, setValues};
 }
 

@@ -20,7 +20,7 @@ const Navigation = () => {
         </label>
       <ul className="nav__bar">
         <li className="nav__item nav__item_first">
-          <NavLink exact to="/" className={`nav__link ${isMain && "nav__link_white"}`} activeClassName="nav__link_active" href="/">
+          <NavLink to="/" className={`nav__link ${isMain && "nav__link_white"}`} activeClassName="nav__link_active" href="/">
             Главная
           </NavLink>
         </li>
