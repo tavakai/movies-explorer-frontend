@@ -13,7 +13,9 @@ const SavedMovies = ({
   inputValue,
   searchResults,
   handleFilterShortItems,
-  search
+  search,
+  isSearch,
+  searchResult
 }) => {
   return (
     <section className="movies">
@@ -25,6 +27,8 @@ const SavedMovies = ({
           cards={searchResults}
           savedCards={savedCards}
           removeCard={removeCard}
+          isSearch={isSearch}
+          searchResult={searchResult}
           />
       </div>
       <Footer />

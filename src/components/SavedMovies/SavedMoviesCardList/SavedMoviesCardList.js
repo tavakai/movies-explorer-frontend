@@ -27,7 +27,8 @@ const SavedMoviesCardList = ({
             })}
           </div>
         )}
-        {savedCards.length === 0 ? <NotResults /> : null}
+        {savedCards.length === 0 || cards.length === 0 ? <NotResults /> : null}
+        
     </section>
   );
 }

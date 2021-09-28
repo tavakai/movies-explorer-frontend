@@ -28,6 +28,7 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [shortMovies, setShortMovies] = useState([]);
   const [shortSavedMovies, setShortSavedMovies] = useState([]);
+  const [savedData, setSavedData] = useState(savedMovies);
   const [checked, setChecked] = useState(false);
   const [showItem, setShowItem] = useState(0);
   const [moreItem, setMoreItem] = useState(0);
@@ -84,6 +85,7 @@ function App() {
             .getSavedItems()
             .then((res) => {
               setSavedMovies(res);
+              setSavedData(res);
             })
             .catch((err) => {
               setLoading(false);
@@ -127,6 +129,7 @@ function App() {
         setLoggedIn(false);
         setCurrentUser({});
         setSavedMovies([]);
+        setSavedData([]);
         localStorage.removeItem("searchResults");
         setAllMovies([]);
         setInputValue("");
@@ -143,11 +146,13 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
         setLoggedIn(true);
+        history.push(location.pathname);
         // Запрос сохраненных фильмов пользователя
         mainApi
           .getSavedItems()
           .then((res) => {
             setSavedMovies(res);
+            setSavedData(res);
           })
           .catch((err) => {
             setLoading(false);
@@ -252,7 +257,7 @@ function App() {
         localStorage.setItem("searchResults", JSON.stringify(results));
       } else if (location.pathname === "/saved-movies") {
         setSavedMovies(
-          savedMovies.filter((movie) => {
+          savedData.filter((movie) => {
             return movie.nameRU.indexOf(inputValue) > -1;
           })
         );
