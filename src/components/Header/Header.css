@@ -1,5 +1,6 @@
 .header {
     background-color: #465DFF;
+    padding: 0px 70px 0px 70px;
 }
 .header_bgWhite {
     background-color: #ffffff;
@@ -33,6 +34,19 @@
     border: none;
     padding: 0;
     margin: 0;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        padding: 0;
+    }
+    .header__content {
+        padding: 18px 30px;
+    }
 }
 
 @media screen and (max-width: 420px) {

@@ -1,8 +1,10 @@
 import React from 'react';
 import * as moviesApi from '../../../utils/MoviesApi';
+import * as mainApi from '../../../utils/MainApi';
 
-const MoviesCard = ({card, saveCard, isSaved, removeCard}) => {
+const SavedMoviesCard = ({card, saveCard, savedCards, isSaved, removeCard}) => {
   const image = `${moviesApi.base_url}${card.image.url}`;
+  const imageSavedCard = `${moviesApi.base_url}${card.image}`;
   const movieNameRU = card.nameRU;
   const movieLink = card.trailerLink;
   const mins = card.duration % 60;
@@ -18,7 +20,7 @@ const MoviesCard = ({card, saveCard, isSaved, removeCard}) => {
       </a>
         <div className="card__likes">
           <button onClick={
-            isSaved ? _ => removeCard(isSaved) : _ => saveCard(card)
+            isSaved ? _ => removeCard(isSaved._id) : _ => saveCard(card)
             } type="button" className={`card__like ${isSaved && "card__like_active"}`} />
         </div>
       <hr className="card__line" />
@@ -27,4 +29,4 @@ const MoviesCard = ({card, saveCard, isSaved, removeCard}) => {
   );
 }
 
-export default MoviesCard;
+export default SavedMoviesCard;

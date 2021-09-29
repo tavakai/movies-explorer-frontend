@@ -1,7 +1,7 @@
 .nav {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  padding: 18px 0px 18px 0px;
+  padding: 18px 0px;
 }
 .nav__logo-main {
   width: 38px;
@@ -34,11 +34,14 @@
   padding: 28px 0px 4px 0px;
   cursor: pointer;
 }
+.nav__link_white {
+  color: #fff;
+}
 .nav__link_active {
   font-weight: 500;
 }
 .nav__link:hover {
-  font-weight: 500;
+  border-bottom: 2px solid #000;
 }
 .nav__item_first {
   font-weight: 500;
@@ -53,6 +56,7 @@
   box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
   border-radius: 40px;
   border: none;
+  text-decoration: none;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -111,6 +115,8 @@
 }
 .nav {
   grid-template-columns: 1fr 1fr;
+  /* width: 100%; */
+  padding: 18px 30px;
 }
 .nav__menu-btn {
   display: block;
@@ -181,7 +187,7 @@
   padding: 28px 0px 6px 0px;
 }
 .nav__link:hover {
-  border-bottom: 2px solid #000;
+  /* border-bottom: 2px solid #000; */
   padding: 28px 0px 4px 0px;
 }
 }

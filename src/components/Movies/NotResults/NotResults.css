@@ -1,0 +1,13 @@
+.NotResults {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.NotResults__text {
+  color: #a0a0a0;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}

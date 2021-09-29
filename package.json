@@ -18,7 +18,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* tavakai@84.201.177.35:/home/tavakai/diploma/frontend/build"
+    "deploy": "npm run build && scp -r ./build/* tavakai@84.201.177.35:/home/tavakai/movies-diploma-frontend/build"
   },
   "eslintConfig": {
     "extends": [

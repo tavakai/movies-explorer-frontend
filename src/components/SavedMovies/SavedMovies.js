@@ -1,20 +1,39 @@
 import React from 'react';
-import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import SearchForm from '../Movies/SearchForm/SearchForm';
-import Navigation from '../Navigation/Navigation';
 import Footer from '../Footer/Footer';
+import SavedMoviesCardList from './SavedMoviesCardList/SavedMoviesCardList';
+import Header from '../Header/Header';
 
-const SavedMovies = () => {
-  const savedMovies = true;
+const SavedMovies = ({
+  loggedIn,
+  loading,
+  savedCards,
+  removeCard,
+  inputForm,
+  inputValue,
+  searchResults,
+  handleFilterShortItems,
+  search,
+  isSearch,
+  searchResult
+}) => {
   return (
-    <section className="savedMovies">
-      <div className="savesMovies__content">
-      <Navigation />
-      <SearchForm />
-      <MoviesCardList savedMovies={savedMovies} />
-      <Footer />
+    <section className="movies">
+    <Header loggedIn={loggedIn} />
+      <div className="movies__content">
+        <SearchForm search={search} inputForm={inputForm} inputValue={inputValue} handleFilterShortItems={handleFilterShortItems} />
+        <SavedMoviesCardList
+          loading={loading}
+          cards={searchResults}
+          savedCards={savedCards}
+          removeCard={removeCard}
+          isSearch={isSearch}
+          searchResult={searchResult}
+          />
       </div>
+      <Footer />
     </section>
+    
   )
 }
 
